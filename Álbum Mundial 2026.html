@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Álbum 2026">
+<meta name="theme-color" content="#1a6630">
+<title>Álbum Mundial 2026</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f2f0eb;color:#1a1a1a;min-height:100vh;padding:16px 12px 88px;-webkit-font-smoothing:antialiased}
+header{text-align:center;margin-bottom:18px}
+header h1{font-size:21px;font-weight:700}
+header p{font-size:11px;color:#aaa;margin-top:2px}
+.tip{font-size:11px;color:#bbb;text-align:center;margin-bottom:14px;padding:0 8px}
+
+/* summary */
+.sb{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:480px;margin:0 auto 16px}
+.sc{background:#fff;border-radius:12px;padding:10px 6px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.09)}
+.sc .num{font-size:22px;font-weight:700;line-height:1}
+.sc .lbl{font-size:10px;color:#aaa;margin-top:2px;text-transform:uppercase;letter-spacing:.4px}
+.ng{color:#2a7d3e}.nb{color:#1758a8}.nm{color:#aaa}
+
+/* controls */
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;max-width:820px;margin:0 auto 10px}
+.ctrl input,.ctrl select{padding:10px 12px;border:1.5px solid #ddd;border-radius:10px;font-size:14px;background:#fff;outline:none;-webkit-appearance:none;width:100%}
+.ctrl input{flex:1;min-width:0}
+.ctrl select{flex:1;min-width:0}
+
+/* legend */
+.leg{display:flex;gap:10px;flex-wrap:wrap;max-width:820px;margin:0 auto 12px;font-size:12px;color:#666;align-items:center}
+.ld{width:13px;height:13px;border-radius:3px;display:inline-block;flex-shrink:0}
+.lt{background:#cff0d4;border:1.5px solid #4db86a}
+.lr{background:#cce4f9;border:1.5px solid #4a8fd9}
+.lf{background:#ebebeb;border:1.5px solid #ccc}
+
+/* edit notice */
+.en{max-width:820px;margin:0 auto 12px;background:#fff8e1;border:1.5px solid #f5c842;border-radius:10px;padding:9px 13px;font-size:12px;color:#7a5800;display:none}
+.en.on{display:block}
+
+/* list */
+#list{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+
+/* card */
+.cc{background:#fff;border-radius:12px;padding:12px 13px;box-shadow:0 1px 4px rgba(0,0,0,.09)}
+.ch{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.cn{font-size:13px;font-weight:700;color:#111;display:flex;align-items:center;gap:5px}
+.wt{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#ffe8b3;color:#7a4a00}
+.cs{display:flex;gap:4px;flex-wrap:wrap}
+.bge{padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.bt{background:#cff0d4;color:#1a6630}
+.br{background:#cce4f9;color:#0d3d8c}
+.bf{background:#ebebeb;color:#666}
+
+/* sticker grid */
+.sg{display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
+@media(max-width:480px){.sg{grid-template-columns:repeat(5,1fr);gap:4px}}
+
+.st{aspect-ratio:1;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:700;position:relative;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;line-height:1;gap:1px;touch-action:manipulation}
+.st-t{background:#cff0d4;color:#1a6630;border:1.5px solid #4db86a}
+.st-r{background:#cce4f9;color:#0d3d8c;border:1.5px solid #4a8fd9}
+.st-f{background:#ebebeb;color:#bbb;border:1.5px solid #ddd}
+.ssub{font-size:7px;font-weight:600;opacity:.6;line-height:1}
+.rb{position:absolute;top:-5px;right:-5px;background:#1758a8;color:#fff;border-radius:50%;font-size:9px;width:14px;height:14px;display:flex;align-items:center;justify-content:center;font-weight:700;border:1.5px solid #fff}
+.dim{opacity:.18}
+
+/* progress */
+.pw{background:#ebebeb;border-radius:4px;height:4px;margin-top:9px;overflow:hidden}
+.pf{height:100%;background:linear-gradient(90deg,#4db86a,#4a8fd9);border-radius:4px}
+.pl{font-size:11px;color:#bbb;text-align:right;margin-top:3px}
+
+/* bottom bar */
+.bot{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1.5px solid #e8e8e8;padding:10px 14px;padding-bottom:calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;gap:8px;box-shadow:0 -2px 10px rgba(0,0,0,.08);z-index:100}
+.bot p{font-size:12px;color:#666;flex:1;min-width:0}
+.btn{padding:10px 16px;border-radius:10px;font-size:13px;font-weight:700;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;white-space:nowrap}
+.be{background:#f0a500;color:#fff}
+.bs{background:#2a7d3e;color:#fff}
+.bc{background:#ebebeb;color:#444}
+
+/* popup */
+.po{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:200;padding-bottom:env(safe-area-inset-bottom)}
+.po.on{display:flex}
+.pp{background:#fff;border-radius:18px 18px 0 0;padding:20px 18px 24px;width:100%;max-width:420px}
+.pp h3{font-size:15px;font-weight:700;margin-bottom:5px;text-align:center}
+.pp p{font-size:12px;color:#888;margin-bottom:16px;text-align:center}
+.pb{display:flex;flex-direction:column;gap:9px}
+.pb button{padding:13px;border-radius:11px;font-size:14px;font-weight:600;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;width:100%}
+.pbq{background:#fce8e8;color:#8a1a1a}
+.pbm{background:#cce4f9;color:#0d3d8c}
+.pbc{background:#ebebeb;color:#444}
+
+/* toast */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#2a7d3e;color:#fff;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;z-index:300;white-space:nowrap}
+.toast.on{opacity:1}
+
+.nores{text-align:center;color:#bbb;padding:40px;font-size:14px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚽ Álbum Mundial 2026</h1>
+  <p>Tu colección personal</p>
+</header>
+
+<p class="tip">📱 Para instalar como app: Safari → <strong>Compartir</strong> → <strong>Añadir a pantalla de inicio</strong></p>
+
+<div class="sb">
+  <div class="sc"><div class="num ng" id="tot-t">—</div><div class="lbl">Tengo</div></div>
+  <div class="sc"><div class="num nb" id="tot-r">—</div><div class="lbl">Repetidos</div></div>
+  <div class="sc"><div class="num nm" id="tot-f">—</div><div class="lbl">Me faltan</div></div>
+</div>
+
+<div class="ctrl">
+  <input type="search" id="search" placeholder="🔍 Buscar selección..." oninput="render()" autocomplete="off" autocorrect="off" spellcheck="false">
+  <select id="filter" onchange="render()">
+    <option value="all">Todas las selecciones</option>
+    <option value="jugadores">Jugadores (2–12 y 14–20)</option>
+    <option value="escudos">Escudos (sticker 1)</option>
+    <option value="equipos">Foto de equipo (sticker 13)</option>
+    <option value="falta">Me faltan stickers</option>
+    <option value="repe">Con repetidos</option>
+    <option value="completa">Completas</option>
+  </select>
+</div>
+
+<div class="leg">
+  <strong style="color:#555">Ref:</strong>
+  <span style="display:flex;align-items:center;gap:4px"><span class="ld lt"></span>Tengo</span>
+  <span style="display:flex;align-items:center;gap:4px"><span class="ld lr"></span>Repetido(s)</span>
+  <span style="display:flex;align-items:center;gap:4px"><span class="ld lf"></span>Me falta</span>
+</div>
+
+<div class="en" id="en">
+  ✏️ <strong>Modo edición.</strong>
+  Toca un sticker <em>gris</em> para marcarlo como conseguido.
+  Toca uno <em>verde o azul</em> para quitarlo o añadir un repetido.
+  Pulsa <strong>Guardar</strong> cuando termines.
+</div>
+
+<div id="list"></div>
+
+<div class="bot">
+  <p id="pmsg">Pulsa <strong>Editar</strong> para actualizar tu colección.</p>
+  <button class="btn bc" id="btn-cancel" style="display:none" onclick="cancelEdit()">Cancelar</button>
+  <button class="btn bs" id="btn-save"   style="display:none" onclick="saveEdit()">💾 Guardar</button>
+  <button class="btn be" id="btn-edit"   onclick="startEdit()">✏️ Editar</button>
+</div>
+
+<div class="po" id="popup" onclick="bgClose(event)">
+  <div class="pp">
+    <h3 id="pt"></h3>
+    <p  id="ps"></p>
+    <div class="pb">
+      <button class="pbq" id="pbq" onclick="popAct('quitar')">Quitar</button>
+      <button class="pbm"          onclick="popAct('mas')">+ Un repetido</button>
+      <button class="pbc"          onclick="closePopup()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✔ Guardado</div>
+
+<script>
+/* ════════════════════════════════════════════
+   NUMERACIÓN
+   ─────────────────────────────────────────
+   WC (especial):
+     índice 0  → "01"
+     índice 1  → "02"
+     ...
+     índice 18 → "19"
+     índice 19 → "00"   ← el "20" del Excel
+
+   PAÍSES (todos los demás):
+     índice 0  → sticker "1"   = ESCUDO
+     índice 1  → sticker "2"   = jugador
+     ...
+     índice 11 → sticker "12"  = jugador
+     índice 12 → sticker "13"  = EQUIPO
+     índice 13 → sticker "14"  = jugador
+     ...
+     índice 19 → sticker "20"  = jugador
+════════════════════════════════════════════ */
+
+const ORIG = {"WC":{"t":[1,1,1,0,1,1,1,1,0,1,0,1,1,1,1,1,0,1,1,1],"r":[0,0,0,0,1,0,0,0,0,0,0,0,0,0,2,1,0,0,3,1]},"MEXICO":{"t":[1,1,1,1,1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1],"r":[0,1,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]},"SOUTH AFRICA":{"t":[0,1,1,1,1,0,0,1,0,1,1,1,1,1,0,0,1,0,1,0],"r":[0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0]},"KOREA":{"t":[0,0,1,0,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,0],"r":[0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,1,0,1,0,0]},"REP CHECA":{"t":[0,0,0,0,0,1,1,1,0,1,1,0,0,1,0,0,0,1,0,0],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"CANADA":{"t":[1,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0],"r":[0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0]},"BOSNIA":{"t":[1,0,0,0,1,0,0,1,1,1,0,1,1,1,1,0,0,0,1,1],"r":[0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0]},"QATAR":{"t":[1,0,1,1,1,0,1,0,0,1,0,1,1,0,1,0,0,0,1,0],"r":[1,0,0,1,1,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0]},"SUIZA":{"t":[1,1,0,1,0,0,1,1,0,1,0,1,0,1,1,1,1,1,1,0],"r":[1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]},"BRASIL":{"t":[0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,0,0,0],"r":[0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]},"MARRUECOS":{"t":[1,1,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"HAITI":{"t":[0,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,1,1],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"ESCOCIA":{"t":[1,1,0,0,0,1,1,1,1,1,1,0,1,0,1,1,0,0,1,0],"r":[1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0]},"USA":{"t":[1,1,1,1,0,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0],"r":[0,1,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0]},"PARAGUAY":{"t":[1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0,0,0],"r":[0,0,0,1,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0]},"AUSTRALIA":{"t":[1,0,1,1,0,1,1,1,1,1,1,1,0,1,1,1,0,1,1,1],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},"TURQUIA":{"t":[1,0,1,1,0,0,0,1,1,0,0,0,0,1,0,0,0,1,1,1],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"ALEMANIA":{"t":[0,1,1,1,1,1,1,0,1,1,1,1,0,0,1,1,1,0,1,1],"r":[0,0,0,0,1,0,0,0,1,0,0,1,0,0,1,0,0,0,0,1]},"CURACAO":{"t":[0,1,0,1,0,0,0,1,0,1,1,1,0,0,0,0,1,0,0,0],"r":[0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0]},"COSTA MARFIL":{"t":[1,1,0,0,0,1,0,0,1,1,0,0,0,0,1,0,0,0,1,0],"r":[1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0]},"ECUADOR":{"t":[0,1,0,0,0,1,0,1,1,1,1,1,0,1,1,0,1,1,0,0],"r":[0,1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0]},"HOLANDA":{"t":[1,0,0,1,1,0,1,1,1,0,1,0,0,0,0,0,0,1,1,1],"r":[0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0]},"JAPON":{"t":[1,1,1,1,1,0,1,0,0,0,1,0,0,0,0,1,1,1,0,1],"r":[1,1,1,0,0,0,1,0,0,0,2,0,0,0,0,1,0,0,0,1]},"SUECIA":{"t":[1,1,1,1,0,0,1,0,1,1,0,0,1,1,0,0,0,1,1,0],"r":[0,0,0,1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0]},"TUNEZ":{"t":[1,1,1,1,0,1,1,1,0,0,1,1,0,1,1,1,1,1,1,1],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0]},"BELGICA":{"t":[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"r":[0,1,1,0,1,1,1,0,0,1,1,0,0,0,1,1,0,0,0,1]},"EGIPTO":{"t":[1,1,1,0,0,1,1,0,0,0,0,1,1,1,1,1,0,0,0,0],"r":[1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0]},"IRAN":{"t":[0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1]},"NUEVA ZELANDA":{"t":[1,1,0,1,1,1,0,1,1,1,0,1,1,0,0,1,1,1,1,1],"r":[0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0]},"ESPAÑA":{"t":[1,0,0,1,1,0,0,1,1,0,0,0,0,1,1,0,1,1,1,1],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0]},"CABO VERDE":{"t":[1,0,0,1,1,0,0,1,1,0,0,1,1,1,0,0,1,1,0,0],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"ARABIA SAUDITA":{"t":[1,1,0,0,1,1,0,0,1,1,0,0,1,0,0,0,1,0,1,1],"r":[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0]},"URUGUAY":{"t":[1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,0,1,1,1,1],"r":[0,0,0,1,0,0,0,1,0,0,0,1,0,1,0,0,1,0,0,0]},"FRANCIA":{"t":[1,0,1,1,0,0,1,1,0,0,1,1,0,0,1,0,0,0,1,1],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},"SENEGAL":{"t":[1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,0,0,0,1,1],"r":[0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,2,0]},"IRAQ":{"t":[0,1,1,0,0,1,1,1,0,1,1,1,1,0,1,1,1,0,1,1],"r":[0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0]},"NORUEGA":{"t":[1,0,1,1,1,0,1,1,1,0,1,0,1,1,0,1,1,1,1,1],"r":[1,0,1,0,0,0,1,0,0,0,1,0,1,0,0,1,0,1,0,0]},"ARGENTINA":{"t":[1,1,1,0,1,1,1,1,1,0,0,1,0,1,0,0,0,1,1,1],"r":[0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1]},"ARGELIA":{"t":[0,1,1,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1],"r":[0,1,1,0,0,0,1,0,2,0,1,0,0,2,1,1,0,0,0,1]},"AUSTRIA":{"t":[0,0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"r":[0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,1,1]},"JORDANIA":{"t":[1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1],"r":[1,1,0,0,0,0,0,1,1,0,0,1,0,1,0,0,1,2,0,0]},"PORTUGAL":{"t":[0,1,1,1,1,1,1,0,1,1,1,0,0,1,1,1,0,1,0,1],"r":[0,0,1,0,0,1,0,0,0,2,0,0,0,0,2,0,0,0,0,0]},"CONGO":{"t":[0,0,0,1,0,0,1,0,0,0,1,1,1,0,0,1,0,0,0,1],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"UZBEKISTAN":{"t":[1,0,1,1,0,0,0,1,0,0,1,1,0,0,0,0,1,1,0,0],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"COLOMBIA":{"t":[0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,1,1],"r":[0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0]},"INGLATERRA":{"t":[1,0,0,0,0,0,0,0,0,1,0,0,1,0,1,1,1,1,1,0],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0]},"CROACIA":{"t":[0,1,0,0,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0],"r":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"GHANA":{"t":[0,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,0,0],"r":[0,0,0,1,1,0,0,0,1,0,0,0,0,1,0,0,1,1,0,0]},"PANAMA":{"t":[1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,0,1,1],"r":[0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0]}};
+
+const KEY = 'album2026v5';
+let state, backup, editMode=false, pending=null;
+
+function lbl(c, i) {
+  if (c==='WC') {
+    if (i===19) return '00';
+    return String(i+1).padStart(2,'0');
+  }
+  return String(i+1);
+}
+function tipo(i) {
+  if (i===0)  return 'escudo';
+  if (i===12) return 'equipo';
+  return 'jugador';
+}
+
+/* ── storage con fallback para Safari/iOS file:// ── */
+let _mem = null;
+function saveRaw(v){ try{localStorage.setItem(KEY,v);_mem=v}catch(e){_mem=v} }
+function loadRaw(){ try{const v=localStorage.getItem(KEY); if(v) return v;}catch(e){} return _mem; }
+
+function loadState(){
+  try{ const s=loadRaw(); if(s){state=JSON.parse(s);return;} }catch(e){}
+  state=JSON.parse(JSON.stringify(ORIG));
+}
+function persist(){ saveRaw(JSON.stringify(state)); }
+
+function totals(){
+  let tT=0,tR=0,tF=0;
+  Object.values(state).forEach(d=>{
+    for(let i=0;i<20;i++){ d.t[i]?tT++:tF++; tR+=d.r[i]||0; }
+  });
+  return {tT,tR,tF};
+}
+
+function render(){
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  const f=document.getElementById('filter').value;
+  const {tT,tR,tF}=totals();
+  document.getElementById('tot-t').textContent=tT;
+  document.getElementById('tot-r').textContent=tR;
+  document.getElementById('tot-f').textContent=tF;
+
+  let keys=Object.keys(state).filter(c=>c.toLowerCase().includes(q));
+  if(f==='falta')    keys=keys.filter(c=>state[c].t.some(v=>!v));
+  if(f==='repe')     keys=keys.filter(c=>state[c].r.some(v=>v>0));
+  if(f==='completa') keys=keys.filter(c=>state[c].t.every(v=>v>0));
+
+  const list=document.getElementById('list');
+  if(!keys.length){list.innerHTML='<div class="nores">😶 No se encontraron selecciones</div>';return;}
+
+  list.innerHTML=keys.map(c=>{
+    const d=state[c]; const isWC=c==='WC';
+    let cT=0,cR=0,cF=0;
+    for(let i=0;i<20;i++){d.t[i]?cT++:cF++; cR+=d.r[i]||0;}
+    const pct=Math.round(cT/20*100);
+
+    const stickers=Array.from({length:20},(_,i)=>{
+      const num=lbl(c,i);
+      const tp=isWC?null:tipo(i);
+
+      let dim=false;
+      if(!isWC){
+        if(f==='escudos')   dim=tp!=='escudo';
+        if(f==='equipos')   dim=tp!=='equipo';
+        if(f==='jugadores') dim=tp!=='jugador';
+      }
+
+      const tieneRepe=d.t[i]&&d.r[i]>0;
+      const tiene=d.t[i]&&!d.r[i];
+      const cls=tieneRepe?'st-r':tiene?'st-t':'st-f';
+      const badge=tieneRepe?`<span class="rb">${d.r[i]}</span>`:'';
+      const sub=(!isWC&&tp!=='jugador')?`<span class="ssub">${tp}</span>`:'';
+      const click=editMode?`onclick="sc('${c.replace(/'/g,"\\'")}',${i})"`:'';
+      const dimcls=dim?' dim':'';
+
+      return `<div class="st ${cls}${dimcls}"${click}>${num}${badge}${sub}</div>`;
+    }).join('');
+
+    return `<div class="cc">
+      <div class="ch">
+        <span class="cn">${isWC?'🌍':'🏳️'} ${c}${isWC?' <span class="wt">WC</span>':''}</span>
+        <div class="cs">
+          <span class="bge bt">✔ ${cT}</span>
+          ${cR>0?`<span class="bge br">↩ ${cR}</span>`:''}
+          ${cF>0?`<span class="bge bf">✕ ${cF}</span>`:''}
+        </div>
+      </div>
+      <div class="sg">${stickers}</div>
+      <div class="pw"><div class="pf" style="width:${pct}%"></div></div>
+      <div class="pl">${pct}% completo</div>
+    </div>`;
+  }).join('');
+}
+
+function startEdit(){
+  backup=JSON.parse(JSON.stringify(state)); editMode=true;
+  document.getElementById('btn-edit').style.display='none';
+  document.getElementById('btn-save').style.display='inline-block';
+  document.getElementById('btn-cancel').style.display='inline-block';
+  document.getElementById('pmsg').textContent='Toca los stickers para actualizarlos.';
+  document.getElementById('en').classList.add('on');
+  render();
+}
+function saveEdit(){
+  persist(); editMode=false;
+  document.getElementById('btn-edit').style.display='inline-block';
+  document.getElementById('btn-save').style.display='none';
+  document.getElementById('btn-cancel').style.display='none';
+  document.getElementById('pmsg').textContent='Pulsa Editar para actualizar tu colección.';
+  document.getElementById('en').classList.remove('on');
+  render(); showToast();
+}
+function cancelEdit(){
+  state=backup; editMode=false;
+  document.getElementById('btn-edit').style.display='inline-block';
+  document.getElementById('btn-save').style.display='none';
+  document.getElementById('btn-cancel').style.display='none';
+  document.getElementById('pmsg').textContent='Pulsa Editar para actualizar tu colección.';
+  document.getElementById('en').classList.remove('on');
+  render();
+}
+function showToast(){
+  const t=document.getElementById('toast'); t.classList.add('on');
+  setTimeout(()=>t.classList.remove('on'),2000);
+}
+
+function sc(c,i){
+  if(!editMode) return;
+  const d=state[c];
+  if(!d.t[i]){d.t[i]=1;d.r[i]=0;render();return;}
+  pending={c,i};
+  const n=lbl(c,i); const tp=c==='WC'?'WC':tipo(i);
+  document.getElementById('pt').textContent=`${c} · Sticker ${n} (${tp})`;
+  document.getElementById('ps').textContent=d.r[i]>0
+    ?`Tienes este sticker + ${d.r[i]} repetido(s). ¿Qué hacemos?`
+    :`Ya tienes este sticker. ¿Qué hacemos?`;
+  document.getElementById('pbq').textContent=d.r[i]>0?'Quitar un repetido':'Quitar el sticker';
+  document.getElementById('popup').classList.add('on');
+}
+function popAct(a){
+  if(!pending) return;
+  const {c,i}=pending; const d=state[c];
+  if(a==='quitar'){ d.r[i]>0?d.r[i]--:(d.t[i]=0,d.r[i]=0); }
+  else{ if(!d.t[i])d.t[i]=1; d.r[i]++; }
+  closePopup(); render();
+}
+function closePopup(){pending=null;document.getElementById('popup').classList.remove('on');}
+function bgClose(e){if(e.target===document.getElementById('popup'))closePopup();}
+
+loadState(); render();
+</script>
+</body>
+</html>
